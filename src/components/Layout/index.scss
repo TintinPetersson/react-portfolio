@@ -1,0 +1,172 @@
+.page {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
+.container {
+  width: 100%;
+  will-change: content;
+  height: 90%;
+  min-height: 566px;
+  position: absolute;
+  opacity: 0;
+  top: 5%;
+  margin: 0 auto;
+  z-index: 1;
+  transform-style: preserve-3d;
+  animation: fadeIn 1s forwards;
+  animation-delay: 1s;
+}
+
+.about-page,
+.contact-page {
+  .text-zone {
+    position: absolute;
+    left: 10%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 35%;
+    vertical-align: middle;
+    display: table-cell;
+    max-height: 90%;
+
+    h1 {
+      font-size: 62px;
+      font-family: 'La Belle Aurore', cursive;
+      color: #fff;
+      font-weight: 600;
+      margin-top: 0;
+      position: relative;
+      margin-bottom: 40px;
+      left: 10px;
+    }
+
+    p {
+      font-size: 13px;
+      color: #fff;
+      font-family: sans-serif;
+      font-weight: 400;
+      letter-spacing: 2px;
+      min-width: fit-content;
+      animation: pulse 1s;
+
+      &:nth-of-type(1) {
+        animation-delay: 1.1s;
+      }
+
+      &:nth-of-type(2) {
+        animation-delay: 1.2s;
+      }
+
+      &:nth-of-type(3) {
+        animation-delay: 1.3s;
+      }
+    }
+  }
+
+  .text-animate-hover {
+    &:hover {
+      color: #fff;
+    }
+  }
+}
+
+.circle-wrapper {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: absolute;
+}
+
+.circle-container {
+  $particleNum: 2000;
+  $particleColor: hsl(0, 0%, 100%);
+
+  position: absolute;
+  transform: translateY(-40vh);
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+
+  .circle {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    mix-blend-mode: screen;
+    background-image: radial-gradient(
+      hsl(0, 0%, 98%),
+      hsl(0, 0%, 100%) 10%,
+      hsla(0, 0%, 100%, 0) 56%
+    );
+
+    animation: fadein-frames 200ms infinite, scale-frames 2s infinite;
+
+    @keyframes fade-frames {
+      0% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.7;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+
+    @keyframes scale-frames {
+      0% {
+        transform: scale3d(0.4, 0.4, 1);
+      }
+
+      50% {
+        transform: scale3d(2.2, 2.2, 1);
+      }
+
+      100% {
+        transform: scale3d(0.4, 0.4, 1);
+      }
+    }
+  }
+
+  $particleBaseSize: 6;
+
+  @for $i from 1 through $particleNum {
+    &:nth-child(#{$i}) {
+      $circleSize: random($particleBaseSize);
+      width: $circleSize + px;
+      height: $circleSize + px;
+
+      $startPositionY: random(10) + 100;
+      $framesName: 'move-frames-' + $i;
+      $moveDuration: 20000 + random(9000) + ms;
+
+      animation-name: #{$framesName};
+      animation-duration: $moveDuration;
+      animation-delay: random(27000) + ms;
+
+      @keyframes #{$framesName} {
+        from {
+          transform: translate3d(
+            #{random(100) + vw},
+            #{$startPositionY + vh},
+            0
+          );
+        }
+
+        to {
+          transform: translate3d(
+            #{random(100) + vw},
+            #{- $startPositionY - random(30) + vh},
+            0
+          );
+        }
+      }
+
+      .circle {
+        animation-delay: random(400) + ms;
+      }
+    }
+  }
+}
